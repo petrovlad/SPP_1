@@ -55,7 +55,7 @@ namespace SPP1
 
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            int err = MainWindow.IsInputCorrect(txtYear.Text, txtPrice.Text, cmbbxCulture.SelectedItem.ToString());
+            int err = MainWindow.IsInputCorrect(txtYear.Text, txtPrice.Text, cmbbxCulture.SelectedItem.ToString(), txtISBN.Text);
             switch (err)
             {
                 case 1:

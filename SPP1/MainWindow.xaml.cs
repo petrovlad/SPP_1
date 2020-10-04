@@ -43,7 +43,7 @@ namespace SPP1
 
         private void btnAddBook_Click(object sender, RoutedEventArgs e)
         {
-            int err = IsInputCorrect(txtYear.Text, txtPrice.Text, cmbbxCulture.SelectedItem.ToString());
+            int err = IsInputCorrect(txtYear.Text, txtPrice.Text, cmbbxCulture.SelectedItem.ToString(), txtISBN.Text);
             switch (err)
             {
                 case 1:
@@ -54,6 +54,9 @@ namespace SPP1
                     return;
                 case 3:
                     MessageBox.Show("Invalid culture value!");
+                    return;
+                case 4:
+                    MessageBox.Show("Invalid ISBN value!");
                     return;
             }
             // create and initialize book
@@ -152,7 +155,7 @@ namespace SPP1
         // можно передавать окно и чекать поля, но что если у окон не совпадают поля/названия полей?
         // можно передавать строки, что логичнее, но эффективно ли??
         // возвращать строку с состоянием ошибки или возвращать код ошибки?
-        public static int IsInputCorrect(string _year, string _price, string _culture)
+        public static int IsInputCorrect(string _year, string _price, string _culture, string _ISBN)
         {            
             // check year
             int year = 0;
@@ -183,6 +186,10 @@ namespace SPP1
             catch
             {
                 return 3;
+            }
+            if (!ISBNFormat.IsISBNValid(_ISBN))
+            {
+                return 4;
             }
             return 0;
         }
@@ -229,5 +236,6 @@ namespace SPP1
                 RedrawGridBooks();
             }
         }
+        // TODO: equality of books by ISBN; checking while adding/editing a book if there already exist book with such isbn
     }
 }

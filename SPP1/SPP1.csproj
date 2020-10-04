@@ -60,6 +60,7 @@
     <Compile Include="EditBookWindow.xaml.cs">
       <DependentUpon>EditBookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ISBNFormat.cs" />
     <Compile Include="PriceFormat.cs" />
     <Compile Include="YearFormat.cs" />
     <Page Include="EditBookWindow.xaml">
