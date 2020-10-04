@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPP1"
         mc:Ignorable="d"
-        Title="EditBookWindow" Height="180" Width="890">
+        Title="EditBookWindow" Height="180" Width="890" ResizeMode="NoResize">
     <DockPanel>
         <Button x:Name="btnCancel" Content="Cancel" Click="btnCancel_Click" DockPanel.Dock="Bottom" Margin="5" Padding="5"></Button>
         <Button x:Name="btnSaveChanges" Content="Save Changes" Click="btnSaveChanges_Click" DockPanel.Dock="Bottom" Margin="5" Padding="5"></Button>
@@ -32,9 +32,8 @@
             <TextBox x:Name="txtYear" Grid.Column="0" Grid.Row="1" Margin="5" VerticalAlignment="Center" Width="240" HorizontalAlignment="Right" FontSize="15"></TextBox>
 
             <Label x:Name="lblPrice" Content="Price:" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15"></Label>
-            <TextBox x:Name="txtPrice" Grid.Column="1" Grid.Row="1" Margin="5" VerticalAlignment="Center" Width="150" HorizontalAlignment="Center" FontSize="15"></TextBox>
+            <TextBox x:Name="txtPrice" Grid.Column="1" Grid.Row="1" Margin="5 5 15 5" VerticalAlignment="Center" Width="200" HorizontalAlignment="Center" FontSize="15"></TextBox>
             <ComboBox x:Name="cmbbxCulture" Grid.Column="1" Grid.Row="1" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"></ComboBox>
-
 
             <Label x:Name="lblISBN" Content="ISBN:" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15"></Label>
             <TextBox x:Name="txtISBN" Grid.Column="2" Grid.Row="1" Margin="5" VerticalAlignment="Center" Width="240" HorizontalAlignment="Right" FontSize="15" ></TextBox>

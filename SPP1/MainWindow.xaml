@@ -64,7 +64,6 @@
             <TextBox x:Name="txtPrice" Grid.Column="1" Grid.Row="1" Margin="5 5 15 5" VerticalAlignment="Center" Width="200" HorizontalAlignment="Center" FontSize="15"></TextBox>
             <ComboBox x:Name="cmbbxCulture" Grid.Column="1" Grid.Row="1" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"></ComboBox>
             
-            
             <Label x:Name="lblISBN" Content="ISBN:" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15"></Label>
             <TextBox x:Name="txtISBN" Grid.Column="2" Grid.Row="1" Margin="5" VerticalAlignment="Center" Width="240" HorizontalAlignment="Right" FontSize="15" ></TextBox>
         </Grid>

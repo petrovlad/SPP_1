@@ -34,15 +34,17 @@ namespace SPP1
             InitializeComponent();
 
             cmbbxCulture.ItemsSource = CultureInfo.GetCultures(CultureTypes.NeutralCultures);
-            string cultureName = NewPrice.Culture.Name;
-            cmbbxCulture.SelectedItem = CultureInfo.GetCultureInfo(cultureName);
+        }
 
+        public void FillOldValues()
+        {
             txtAuthor.Text = NewAuthor;
             txtTitle.Text = NewTitle;
             txtPublisher.Text = NewPublisher;
             txtPrice.Text = NewPrice.Value.ToString();
+            cmbbxCulture.SelectedItem = CultureInfo.GetCultureInfo(NewPrice.Culture.ToString());
             txtYear.Text = NewYear.Value.ToString();
-            
+            txtISBN.Text = NewISBN;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

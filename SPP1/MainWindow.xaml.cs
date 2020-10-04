@@ -122,6 +122,7 @@ namespace SPP1
                 editBookWindow.NewYear = editedBook.Year;
                 editBookWindow.NewPrice = editedBook.Price;
                 editBookWindow.NewISBN = editedBook.ISBN;
+                editBookWindow.FillOldValues();
 
                 if ((bool)editBookWindow.ShowDialog())
                 {
