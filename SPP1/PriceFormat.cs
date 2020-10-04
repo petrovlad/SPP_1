@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace SPP1
 {
-    internal class PriceFormat : IComparable<PriceFormat>
+    [Serializable]
+    class PriceFormat : IComparable<PriceFormat>
     {
         public double Value { get; set; }
         public CultureInfo Culture { get; set; }

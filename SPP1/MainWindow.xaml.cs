@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -101,7 +104,7 @@ namespace SPP1
 
         private void RedrawGridBooks()
         {
-            gridBooks.Items.Clear();
+            gridBooks.Items.Clear(); //????wtf
             for (int i = 0; i < booksList.Count; i++)
             {
                 gridBooks.Items.Add(booksList.ElementAt(i));
@@ -194,6 +197,36 @@ namespace SPP1
             else
             {
                 MessageBox.Show("No one book is selected!");
+            }
+        }
+
+        private void MenuItemSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            if ((bool)saveFileDialog.ShowDialog())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate)) 
+                {
+                    formatter.Serialize(fileStream, booksList);
+                }
+            }
+        }
+
+        private void MenuItemOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            if ((bool)openFileDialog.ShowDialog())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                booksList.Clear();
+                using (FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.OpenOrCreate))
+                {
+                    booksList = (BooksList)formatter.Deserialize(fileStream);
+                }
+                RedrawGridBooks();
             }
         }
     }

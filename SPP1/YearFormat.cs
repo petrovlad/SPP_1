@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SPP1
 {
+    [Serializable]
     class YearFormat : IComparable<YearFormat>
     {
         public int Value { get; set; }

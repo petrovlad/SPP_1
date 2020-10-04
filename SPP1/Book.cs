@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace SPP1 
 {
-    class Book : IComparable<Book>
+    [Serializable]
+    class Book : IComparable<Book>, IEquatable<Book>
     {
         private const string DEFAULT_AUTHOR = "WITHOUT AUTHOR";
         private const string DEFAULT_TITLE = "UNTITLED";
@@ -222,6 +223,30 @@ namespace SPP1
             return string.Compare(bookA.ISBN, bookB.ISBN);
         }
 
+        public bool Equals(Book other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            return this.ISBN.Equals(other.ISBN);
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as Book;
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.ISBN.Equals(other.ISBN);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ISBN.GetHashCode();
+        }
     }
 
 }

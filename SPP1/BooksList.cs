@@ -7,6 +7,7 @@ using System.Windows.Documents;
 
 namespace SPP1
 {
+    [Serializable]
     class BooksList
     {
         private List<Book> books; // как правильно
