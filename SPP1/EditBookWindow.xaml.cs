@@ -83,9 +83,10 @@ namespace SPP1
             NewPrice = new PriceFormat(double.Parse(txtPrice.Text), new CultureInfo(cmbbxCulture.SelectedItem.ToString()));
             NewISBN = new ISBNFormat(txtISBN.Text);
 
+            Book newBook = new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN);
             // check if this book already exists
-            if ((booksList.IndexOf(new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN)) != -1) 
-                && (booksList.IndexOf(new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN)) != oldIndex))
+            if ((booksList.IndexOf(newBook) != -1) 
+                && (booksList.IndexOf(newBook) != oldIndex))
             {
                 MessageBox.Show("Such book already exists!");
                 return;
