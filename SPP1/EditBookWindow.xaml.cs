@@ -20,10 +20,11 @@ namespace SPP1
     /// </summary>
     public partial class EditBookWindow : Window
     {
+        private BooksList booksList;
         public string NewAuthor { get; set; }
         public string NewTitle { get; set; }
         public string NewPublisher { get; set; }
-        public string NewISBN { get; set; }
+        internal ISBNFormat NewISBN { get; set; }
 
         internal PriceFormat NewPrice { get; set; }
 
@@ -36,15 +37,17 @@ namespace SPP1
             cmbbxCulture.ItemsSource = CultureInfo.GetCultures(CultureTypes.NeutralCultures);
         }
 
-        public void FillOldValues()
+        internal void FillOldValues(BooksList _booksList)
         {
+            booksList = _booksList;
+
             txtAuthor.Text = NewAuthor;
             txtTitle.Text = NewTitle;
             txtPublisher.Text = NewPublisher;
             txtPrice.Text = NewPrice.Value.ToString();
             cmbbxCulture.SelectedItem = CultureInfo.GetCultureInfo(NewPrice.Culture.ToString());
             txtYear.Text = NewYear.Value.ToString();
-            txtISBN.Text = NewISBN;
+            txtISBN.Text = NewISBN.Value;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -67,13 +70,23 @@ namespace SPP1
                 case 3:
                     MessageBox.Show("Invalid culture value!");
                     return;
+                case 4:
+                    MessageBox.Show("Invalid ISBN value!");
+                    return;
             }
             NewAuthor = txtAuthor.Text;
             NewTitle = txtTitle.Text;
             NewPublisher = txtPublisher.Text;
             NewYear = new YearFormat(int.Parse(txtYear.Text));
             NewPrice = new PriceFormat(double.Parse(txtPrice.Text), new CultureInfo(cmbbxCulture.SelectedItem.ToString()));
-            NewISBN = txtISBN.Text;
+            NewISBN = new ISBNFormat(txtISBN.Text);
+
+            // check if this book already exists
+            if (booksList.IndexOf(new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN)) != -1)
+            {
+                MessageBox.Show("Such book already exists!");
+                return;
+            }
 
             DialogResult = true;
             Close();

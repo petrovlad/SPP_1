@@ -24,7 +24,7 @@ namespace SPP1
         private string publisher;
         private YearFormat year;
         private PriceFormat price;
-        private string isbn;
+        private ISBNFormat isbn;
 
         public string Author
         {
@@ -126,7 +126,7 @@ namespace SPP1
             }
         }
 
-        public string ISBN
+        public ISBNFormat ISBN
         {
             get
             {
@@ -135,9 +135,9 @@ namespace SPP1
 
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if ((string.IsNullOrWhiteSpace(value.Value)) || (!ISBNFormat.IsISBNValid(value.Value)))
                 {
-                    isbn = DEFAULT_ISBN;
+                    throw new Exception("Invalid ISBN value");
                 }
                 else
                 {
@@ -151,7 +151,7 @@ namespace SPP1
 
         }
 
-        public Book(string _author, string _title, string _publisher, YearFormat _year, PriceFormat _price, string _ISBN)
+        public Book(string _author, string _title, string _publisher, YearFormat _year, PriceFormat _price, ISBNFormat _ISBN)
         {
             Author = _author;
             Title = _title;
@@ -168,7 +168,7 @@ namespace SPP1
             Publisher = _publisher;
             Year = new YearFormat(_year);
             Price = new PriceFormat(_price, new CultureInfo(_cultureName));
-            ISBN = _ISBN;
+            ISBN = new ISBNFormat(_ISBN);
         }
 
         public override string ToString()
@@ -220,7 +220,7 @@ namespace SPP1
         }
         public static int CompareByISBN(Book bookA, Book bookB)
         {
-            return string.Compare(bookA.ISBN, bookB.ISBN);
+            return ISBNFormat.Compare(bookA.ISBN, bookB.ISBN);
         }
 
         public bool Equals(Book other)

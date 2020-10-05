@@ -29,7 +29,11 @@ namespace SPP1
         {
             return books.ElementAt(index);
         }
-
+        // -1 if not found
+        public int IndexOf(Book book)
+        {
+            return books.IndexOf(book);
+        }
         public void Clear()
         {
             books.Clear();

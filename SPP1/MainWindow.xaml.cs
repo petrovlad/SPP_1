@@ -67,7 +67,13 @@ namespace SPP1
             book.Publisher = txtPublisher.Text;
             book.Year = new YearFormat(int.Parse(txtYear.Text));
             book.Price = new PriceFormat(double.Parse(txtPrice.Text), new CultureInfo(cmbbxCulture.SelectedItem.ToString()));
-            book.ISBN = txtISBN.Text;
+            book.ISBN = new ISBNFormat(txtISBN.Text);
+
+            if (booksList.IndexOf(book) != -1)
+            {
+                MessageBox.Show("Such book already exists!");
+                return;
+            }
 
             booksList.Add(book);
             RedrawGridBooks();
@@ -107,7 +113,7 @@ namespace SPP1
 
         private void RedrawGridBooks()
         {
-            gridBooks.Items.Clear(); //????wtf
+            gridBooks.Items.Clear(); //????
             for (int i = 0; i < booksList.Count; i++)
             {
                 gridBooks.Items.Add(booksList.ElementAt(i));
@@ -128,7 +134,7 @@ namespace SPP1
                 editBookWindow.NewYear = editedBook.Year;
                 editBookWindow.NewPrice = editedBook.Price;
                 editBookWindow.NewISBN = editedBook.ISBN;
-                editBookWindow.FillOldValues();
+                editBookWindow.FillOldValues(booksList);
 
                 if ((bool)editBookWindow.ShowDialog())
                 {
@@ -236,6 +242,6 @@ namespace SPP1
                 RedrawGridBooks();
             }
         }
-        // TODO: equality of books by ISBN; checking while adding/editing a book if there already exist book with such isbn
+        // checking while adding/editing a book if there already exist book with such isbn
     }
 }
