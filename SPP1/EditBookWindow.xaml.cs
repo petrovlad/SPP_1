@@ -21,6 +21,7 @@ namespace SPP1
     public partial class EditBookWindow : Window
     {
         private BooksList booksList;
+        private int oldIndex;
         public string NewAuthor { get; set; }
         public string NewTitle { get; set; }
         public string NewPublisher { get; set; }
@@ -37,9 +38,10 @@ namespace SPP1
             cmbbxCulture.ItemsSource = CultureInfo.GetCultures(CultureTypes.NeutralCultures);
         }
 
-        internal void FillOldValues(BooksList _booksList)
+        internal void FillOldValues(BooksList _booksList, int _oldIndex)
         {
             booksList = _booksList;
+            oldIndex = _oldIndex;
 
             txtAuthor.Text = NewAuthor;
             txtTitle.Text = NewTitle;
@@ -82,7 +84,8 @@ namespace SPP1
             NewISBN = new ISBNFormat(txtISBN.Text);
 
             // check if this book already exists
-            if (booksList.IndexOf(new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN)) != -1)
+            if ((booksList.IndexOf(new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN)) != -1) 
+                && (booksList.IndexOf(new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN)) != oldIndex))
             {
                 MessageBox.Show("Such book already exists!");
                 return;
