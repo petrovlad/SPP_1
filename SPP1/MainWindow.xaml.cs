@@ -60,7 +60,6 @@ namespace SPP1
                     return;
             }
             // create and initialize book
-            // Book book = new Book(txtAuthor.Text, txtTitle.Text, txtPublisher.Text, new YearFormat(int.Parse(txtYear.Text)), new PriceFormat(txtPrice.Text, cmbbxCulture.SelectedItem.ToString()), txtISBN.Text);
             Book book = new Book();
             book.Author = txtAuthor.Text;
             book.Title = txtTitle.Text;

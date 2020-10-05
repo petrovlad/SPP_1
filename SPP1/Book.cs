@@ -245,7 +245,7 @@ namespace SPP1
 
         public override int GetHashCode()
         {
-            return this.ISBN.GetHashCode();
+            return (this.ISBN.GetHashCode() + Author.GetHashCode() * 5);
         }
     }
 

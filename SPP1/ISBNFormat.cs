@@ -75,17 +75,17 @@ namespace SPP1
         {
             return Value.GetHashCode();
         }
-        public bool Equals(ISBNFormat isbn)
+        public bool Equals(ISBNFormat other)
         {
-            if (this == isbn)
+            if (this == other)
                 return true;
-            if (isbn is ISBNFormat)
+            if (other is ISBNFormat)
             {
-                return isbn.GS1Prefix.Equals(this.GS1Prefix)
-                    && isbn.CountryCode.Equals(this.CountryCode)
-                    && isbn.ManufacterCode.Equals(this.ManufacterCode)
-                    && isbn.ProductCode.Equals(this.ProductCode)
-                    && isbn.CheckDigit.Equals(this.CheckDigit);
+                return other.GS1Prefix.Equals(this.GS1Prefix)
+                    && other.CountryCode.Equals(this.CountryCode)
+                    && other.ManufacterCode.Equals(this.ManufacterCode)
+                    && other.ProductCode.Equals(this.ProductCode)
+                    && other.CheckDigit.Equals(this.CheckDigit);
                 //return (this.GetHashCode() == isbn.GetHashCode())
             }
             else
@@ -171,7 +171,7 @@ namespace SPP1
 
         public static int Compare(ISBNFormat ISBNa, ISBNFormat ISBNb)
         {
-            return ISBNa.Value.CompareTo(ISBNa.Value);
+            return ISBNa.Value.CompareTo(ISBNb.Value);
         }
     }
 }
