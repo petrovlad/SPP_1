@@ -11,7 +11,7 @@ namespace SPP1
     [Serializable]
     class ISBNFormat : IComparable<ISBNFormat>, IEquatable<ISBNFormat>
     {
-        const byte STANDART_LENGTH = 13;
+        public static byte STANDART_LENGTH = 13;
 
         public int GS1Prefix { get; private set; }
         public int CountryCode { get; private set; }

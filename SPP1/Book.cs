@@ -11,12 +11,12 @@ namespace SPP1
     [Serializable]
     class Book : IComparable<Book>, IEquatable<Book>
     {
-        private const string DEFAULT_AUTHOR = "WITHOUT AUTHOR";
-        private const string DEFAULT_TITLE = "UNTITLED";
-        private const string DEFAULT_PUBLISHER = "WITHOUT PUBLISHER";
-        private const int DEFAULT_YEAR = 0;
-        private const double DEFAULT_PRICE = 0.0;
-        private const string DEFAULT_ISBN = "000000000";
+        private static string DEFAULT_AUTHOR = "WITHOUT AUTHOR";
+        private static string DEFAULT_TITLE = "UNTITLED";
+        private static string DEFAULT_PUBLISHER = "WITHOUT PUBLISHER";
+        private static int DEFAULT_YEAR = 0;
+        private static double DEFAULT_PRICE = 0.0;
+        private static string DEFAULT_ISBN = "000000000";
         private static CultureInfo DEFAULT_CULTURE = new CultureInfo("byn");
 
         private string author;
