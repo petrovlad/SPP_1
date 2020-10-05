@@ -10,8 +10,8 @@ namespace SPP1
     [Serializable]
     class PriceFormat : IComparable<PriceFormat>
     {
-        public double Value { get; set; }
-        public CultureInfo Culture { get; set; }
+        public double Value;
+        public CultureInfo Culture;
 
         public PriceFormat()
         {
@@ -32,12 +32,16 @@ namespace SPP1
 
         public int CompareTo(PriceFormat other)
         {
-            return this.Value.CompareTo(other.Value);
+            int result;
+            if ((result = this.Culture.Name.CompareTo(other.Culture.Name)) == 0)
+            {
+                result = this.Value.CompareTo(other.Value);
+            }
+            return result;
         }
-
-        public static int Compare(PriceFormat yearA, PriceFormat yearB)
+        public static int Compare(PriceFormat priceA, PriceFormat priceB)
         {
-            return yearA.Value.CompareTo(yearB.Value);
+            return priceA.CompareTo(priceB);
         }
     }
 }

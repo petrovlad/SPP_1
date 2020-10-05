@@ -9,7 +9,7 @@ namespace SPP1
     [Serializable]
     class YearFormat : IComparable<YearFormat>
     {
-        public int Value { get; set; }
+        public int Value;
         
         public YearFormat()
         {

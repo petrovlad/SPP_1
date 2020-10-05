@@ -10,7 +10,7 @@ namespace SPP1
     [Serializable]
     class BooksList
     {
-        private List<Book> books; // как правильно
+        private List<Book> books;
         public BooksList()
         {
             books = new List<Book>();

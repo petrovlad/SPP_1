@@ -19,8 +19,8 @@ namespace SPP1
         public int ProductCode { get; private set; }
         public int CheckDigit { get; private set; }
 
-        public string Value { get; set; }
-        // user should enter correct full value, i dont give a shit
+        public string Value;
+        // user should enter correct full value
         public ISBNFormat()
         {
 
