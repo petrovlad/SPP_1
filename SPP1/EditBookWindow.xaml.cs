@@ -60,44 +60,41 @@ namespace SPP1
 
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            int err = MainWindow.IsInputCorrect(txtYear.Text, txtPrice.Text, cmbbxCulture.SelectedItem.ToString(), txtISBN.Text);
-            switch (err)
+            try
             {
-                case 1:
-                    MessageBox.Show("Invalid year value!");
-                    DialogResult = false;
-                    return;
-                case 2:
-                    MessageBox.Show("Invalid price value!");
-                    DialogResult = false;
-                    return;
-                case 3:
-                    MessageBox.Show("Invalid culture value!");
-                    DialogResult = false;
-                    return;
-                case 4:
-                    MessageBox.Show("Invalid ISBN value!");
-                    DialogResult = false;
-                    return;
-            }
-            NewAuthor = txtAuthor.Text;
-            NewTitle = txtTitle.Text;
-            NewPublisher = txtPublisher.Text;
-            NewYear = new YearFormat(int.Parse(txtYear.Text));
-            NewPrice = new PriceFormat(double.Parse(txtPrice.Text), new CultureInfo(cmbbxCulture.SelectedItem.ToString()));
-            NewISBN = new ISBNFormat(txtISBN.Text);
+                int err = MainWindow.IsInputCorrect(txtYear.Text, txtPrice.Text, cmbbxCulture.SelectedItem.ToString(), txtISBN.Text);
+                switch (err)
+                {
+                    case 1:
+                        throw new Exception("Invalid year value!");
+                    case 2:
+                        throw new Exception("Invalid price value!");
+                    case 3:
+                        throw new Exception("Invalid culture value!");
+                    case 4:
+                        throw new Exception("Invalid ISBN value!");
+                }
+                NewAuthor = txtAuthor.Text;
+                NewTitle = txtTitle.Text;
+                NewPublisher = txtPublisher.Text;
+                NewYear = new YearFormat(int.Parse(txtYear.Text));
+                NewPrice = new PriceFormat(double.Parse(txtPrice.Text), new CultureInfo(cmbbxCulture.SelectedItem.ToString()));
+                NewISBN = new ISBNFormat(txtISBN.Text);
 
-            Book newBook = new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN);
-            // check if this book already exists
-            if ((booksList.IndexOf(newBook) != -1) && (booksList.IndexOf(newBook) != oldIndex))
+                Book newBook = new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN);
+                // check if this book already exists
+                if ((booksList.IndexOf(newBook) != -1) && (booksList.IndexOf(newBook) != oldIndex))
+                {
+                    throw new Exception("Such book already exists!");
+                }
+
+                DialogResult = true;
+                Close();
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Such book already exists!");
-                DialogResult = false;
-                return;
+                MessageBox.Show(ex.Message);
             }
-
-            DialogResult = true;
-            Close();
         }
     }
 }

@@ -43,39 +43,41 @@ namespace SPP1
 
         private void btnAddBook_Click(object sender, RoutedEventArgs e)
         {
-            int err = IsInputCorrect(txtYear.Text, txtPrice.Text, cmbbxCulture.SelectedItem.ToString(), txtISBN.Text);
-            switch (err)
+            try
             {
-                case 1:
-                    MessageBox.Show("Invalid year value!");
-                    return;
-                case 2:
-                    MessageBox.Show("Invalid price value!");
-                    return;
-                case 3:
-                    MessageBox.Show("Invalid culture value!");
-                    return;
-                case 4:
-                    MessageBox.Show("Invalid ISBN value!");
-                    return;
-            }
-            // create and initialize book
-            Book book = new Book();
-            book.Author = txtAuthor.Text;
-            book.Title = txtTitle.Text;
-            book.Publisher = txtPublisher.Text;
-            book.Year = new YearFormat(int.Parse(txtYear.Text));
-            book.Price = new PriceFormat(double.Parse(txtPrice.Text), new CultureInfo(cmbbxCulture.SelectedItem.ToString()));
-            book.ISBN = new ISBNFormat(txtISBN.Text);
+                int err = IsInputCorrect(txtYear.Text, txtPrice.Text, cmbbxCulture.SelectedItem.ToString(), txtISBN.Text);
+                switch (err)
+                {
+                    case 1:
+                        throw new Exception("Invalid year value!");
+                    case 2:
+                        throw new Exception("Invalid price value!");
+                    case 3:
+                        throw new Exception("Invalid culture value!");
+                    case 4:
+                        throw new Exception("Invalid ISBN value!");
+                }
+                // create and initialize book
+                Book book = new Book();
+                book.Author = txtAuthor.Text;
+                book.Title = txtTitle.Text;
+                book.Publisher = txtPublisher.Text;
+                book.Year = new YearFormat(int.Parse(txtYear.Text));
+                book.Price = new PriceFormat(double.Parse(txtPrice.Text), new CultureInfo(cmbbxCulture.SelectedItem.ToString()));
+                book.ISBN = new ISBNFormat(txtISBN.Text);
 
-            if (booksList.IndexOf(book) != -1)
+                if (booksList.IndexOf(book) != -1)
+                {
+                    throw new Exception("Such book already exists!");
+                }
+                
+                booksList.Add(book);
+                RedrawGridBooks();
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Such book already exists!");
-                return;
+                MessageBox.Show(ex.Message);
             }
-
-            booksList.Add(book);
-            RedrawGridBooks();
         }
 
         private void MenuItemSortByAuthor_Click(object sender, RoutedEventArgs e)
@@ -121,36 +123,43 @@ namespace SPP1
 
         private void btnEditBook_Click(object sender, RoutedEventArgs e)
         {
-            if (gridBooks.SelectedItem != null)
+            try
             {
-                EditBookWindow editBookWindow = new EditBookWindow();
-                // create new window znd init it
-                Book editedBook = booksList.ElementAt(gridBooks.SelectedIndex);
-                editBookWindow.Owner = this;
-                editBookWindow.NewAuthor = editedBook.Author;
-                editBookWindow.NewTitle = editedBook.Title;
-                editBookWindow.NewPublisher = editedBook.Publisher;
-                editBookWindow.NewYear = editedBook.Year;
-                editBookWindow.NewPrice = editedBook.Price;
-                editBookWindow.NewISBN = editedBook.ISBN;
-                editBookWindow.FillOldValues(booksList, gridBooks.SelectedIndex);
-
-                if ((bool)editBookWindow.ShowDialog())
+                if (gridBooks.SelectedItem != null)
                 {
-                    editedBook.Author = editBookWindow.NewAuthor;
-                    editedBook.Title = editBookWindow.NewTitle;
-                    editedBook.Publisher = editBookWindow.NewPublisher;
-                    editedBook.Year = editBookWindow.NewYear;
-                    editedBook.Price = editBookWindow.NewPrice;
-                    editedBook.ISBN = editBookWindow.NewISBN;
+                    EditBookWindow editBookWindow = new EditBookWindow();
+                    // create new window znd init it
+                    Book editedBook = booksList.ElementAt(gridBooks.SelectedIndex);
+                    editBookWindow.Owner = this;
+                    editBookWindow.NewAuthor = editedBook.Author;
+                    editBookWindow.NewTitle = editedBook.Title;
+                    editBookWindow.NewPublisher = editedBook.Publisher;
+                    editBookWindow.NewYear = editedBook.Year;
+                    editBookWindow.NewPrice = editedBook.Price;
+                    editBookWindow.NewISBN = editedBook.ISBN;
+                    editBookWindow.FillOldValues(booksList, gridBooks.SelectedIndex);
 
-                    RedrawGridBooks();
-                }
+                    if ((bool)editBookWindow.ShowDialog())
+                    {
+                        editedBook.Author = editBookWindow.NewAuthor;
+                        editedBook.Title = editBookWindow.NewTitle;
+                        editedBook.Publisher = editBookWindow.NewPublisher;
+                        editedBook.Year = editBookWindow.NewYear;
+                        editedBook.Price = editBookWindow.NewPrice;
+                        editedBook.ISBN = editBookWindow.NewISBN;
+
+                        RedrawGridBooks();
+                    }
                 
+                }
+                else
+                {
+                    throw new Exception("No one book is selected!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("No one book is selected!");
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -198,15 +207,23 @@ namespace SPP1
 
         private void btnDeleteBook_Click(object sender, RoutedEventArgs e)
         {
-            if (gridBooks.SelectedItem != null)
+            try
             {
-                booksList.RemoveAt(gridBooks.SelectedIndex);
-                RedrawGridBooks();
+                if (gridBooks.SelectedItem != null)
+                {
+                    booksList.RemoveAt(gridBooks.SelectedIndex);
+                    RedrawGridBooks();
+                }
+                else
+                {
+                    throw new Exception("No one book is selected!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("No one book is selected!");
+                MessageBox.Show(ex.Message);
             }
+
         }
 
         private void MenuItemSave_Click(object sender, RoutedEventArgs e)
@@ -238,6 +255,5 @@ namespace SPP1
                 RedrawGridBooks();
             }
         }
-        // checking while adding/editing a book if there already exist book with such isbn
     }
 }
