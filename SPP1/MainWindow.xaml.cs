@@ -155,11 +155,8 @@ namespace SPP1
         }
 
         // check strings for null/spaces is unnecessary, because ibook can be untitled/unauthorized
-        // this function checks price, year, culture(?) and isbn
+        // this function checks price, year, culture and isbn
         // returns 0, if input is correct, otherwise returns number of invalid parameter
-        // можно передавать окно и чекать поля, но что если у окон не совпадают поля/названия полей?
-        // можно передавать строки, что логичнее, но эффективно ли??
-        // возвращать строку с состоянием ошибки или возвращать код ошибки?
         public static int IsInputCorrect(string _year, string _price, string _culture, string _ISBN)
         {            
             // check year

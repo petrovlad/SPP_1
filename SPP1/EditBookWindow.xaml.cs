@@ -22,14 +22,14 @@ namespace SPP1
     {
         private BooksList booksList;
         private int oldIndex;
-        public string NewAuthor { get; set; }
-        public string NewTitle { get; set; }
-        public string NewPublisher { get; set; }
-        internal ISBNFormat NewISBN { get; set; }
 
-        internal PriceFormat NewPrice { get; set; }
+        public string NewAuthor;
+        public string NewTitle;
+        public string NewPublisher;
 
-        internal YearFormat NewYear { get; set; }
+        internal ISBNFormat NewISBN;
+        internal PriceFormat NewPrice;
+        internal YearFormat NewYear;
 
         public EditBookWindow()
         {
@@ -65,15 +65,19 @@ namespace SPP1
             {
                 case 1:
                     MessageBox.Show("Invalid year value!");
+                    DialogResult = false;
                     return;
                 case 2:
                     MessageBox.Show("Invalid price value!");
+                    DialogResult = false;
                     return;
                 case 3:
                     MessageBox.Show("Invalid culture value!");
+                    DialogResult = false;
                     return;
                 case 4:
                     MessageBox.Show("Invalid ISBN value!");
+                    DialogResult = false;
                     return;
             }
             NewAuthor = txtAuthor.Text;
@@ -85,10 +89,10 @@ namespace SPP1
 
             Book newBook = new Book(NewAuthor, NewTitle, NewPublisher, NewYear, NewPrice, NewISBN);
             // check if this book already exists
-            if ((booksList.IndexOf(newBook) != -1) 
-                && (booksList.IndexOf(newBook) != oldIndex))
+            if ((booksList.IndexOf(newBook) != -1) && (booksList.IndexOf(newBook) != oldIndex))
             {
                 MessageBox.Show("Such book already exists!");
+                DialogResult = false;
                 return;
             }
 
