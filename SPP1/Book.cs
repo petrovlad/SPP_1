@@ -34,12 +34,12 @@ namespace SPP1
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    logger.Info("Author parameter was null, so set default Author.");
-
                     author = value;
                 } 
                 else
                 {
+                    logger.Info("Author parameter was null, so set default Author.");
+
                     author = DEFAULT_AUTHOR;
                 }
             }
@@ -56,12 +56,12 @@ namespace SPP1
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    logger.Info("Title parameter was null, so set default Title.");
-
                     title = value;
                 }
                 else
                 {
+                    logger.Info("Title parameter was null, so set default Title.");
+
                     title = DEFAULT_TITLE;
                 }
             }
@@ -78,12 +78,12 @@ namespace SPP1
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    logger.Info("Publisher parameter was null, so set default Publisher.");
-
                     publisher = value;
                 }
                 else
                 {
+                    logger.Info("Publisher parameter was null, so set default Publisher.");
+
                     publisher = DEFAULT_PUBLISHER;
                 }
             }

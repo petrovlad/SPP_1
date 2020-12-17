@@ -59,38 +59,38 @@ namespace SPP1
         {
             Books.Sort(Book.CompareByAuthor);
             
-            logger.Debug("BooksList was by author.");
+            logger.Debug("BooksList was sorted by author.");
         }
 
         public void SortByTitle()
         {
             Books.Sort(Book.CompareByTitle);
 
-            logger.Debug("BooksList was by title.");
+            logger.Debug("BooksList was sorted by title.");
         }
         public void SortByPublisher()
         {
             Books.Sort(Book.CompareByPublisher);
 
-            logger.Debug("BooksList was by publisher.");
+            logger.Debug("BooksList was sorted by publisher.");
         }
         public void SortByYear()
         {
             Books.Sort(Book.CompareByYear);
 
-            logger.Debug("BooksList was by year.");
+            logger.Debug("BooksList was sorted by year.");
         }
         public void SortByPrice()
         {
             Books.Sort(Book.CompareByPrice);
 
-            logger.Debug("BooksList was by price.");
+            logger.Debug("BooksList was sorted by price.");
         }
         public void SortByISBN()
         {
             Books.Sort(Book.CompareByISBN);
 
-            logger.Debug("BooksList was by ISBN.");
+            logger.Debug("BooksList was sorted by ISBN.");
         }
         public int Count
         {

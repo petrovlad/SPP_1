@@ -10,7 +10,8 @@ namespace SPP1.Tests
 	[TestFixture]
 	public class BookTests
 	{
-		[TestCase("Author", "Title", "Publisher", 2001, 99.99, "byn", "978-3-16-148410-0")]
+		[TestCase("Author1", "Title1", "Publisher1", 2001, 99.99, "byn", "978-3-16-148410-0")]
+		[TestCase("Author2", "Title2", "Publisher2", 2002, 199.99, "byn", "978-1-4028-9462-6")]
 		public void CreateValidBookTest(string author, string title, string publisher, int year, double price, string cultureName, string ISBN)
 		{
 			Book book = new Book(author, title, publisher, year, price, cultureName, ISBN);
@@ -28,14 +29,7 @@ namespace SPP1.Tests
 		public void CreateInvalidISBNBookTest(string author, string title, string publisher, int year, double price, string cultureName, string ISBN)
 		{
 			Assert.Throws<ArgumentException>(() => new Book(author, title, publisher, year, price, cultureName, ISBN), "Invalid ISBN value!");
-/*			try 
-			{
-				Book book = new Book(author, title, publisher, year, price, cultureName, ISBN);
-			} 
-			catch (ArgumentException e) 
-			{
-				Assert.AreEqual(e.Message, "Invalid ISBN value!");
-			}*/
+
 		}
 
 		[TestCase("Author", "", "Publisher", 2001, 99.99, "byn", "978-3-16-148410-0")]
@@ -84,9 +78,7 @@ namespace SPP1.Tests
 		public void SortByAuthorTest()
 		{
 			List<Book> expectedResult = new List<Book>(booksList.Books.OrderBy(x => x.Author));
-
 			booksList.SortByAuthor();
-
 			CollectionAssert.AreEqual(expectedResult, booksList.Books);
 		}
 
@@ -94,11 +86,18 @@ namespace SPP1.Tests
 		public void SortByTitleTest()
 		{
 			List<Book> expectedResult = new List<Book>(booksList.Books.OrderBy(x => x.Title));
-
 			booksList.SortByTitle();
-
 			CollectionAssert.AreEqual(expectedResult, booksList.Books);
 		}
+
+		[Test]
+		public void SortByISBNTest()
+		{
+			List<Book> expectedResult = new List<Book>(booksList.Books.OrderBy(x => x.ISBN));
+			booksList.SortByISBN();
+			CollectionAssert.AreEqual(expectedResult, booksList.Books);
+		}
+
 	}
 
 	[TestFixture]
