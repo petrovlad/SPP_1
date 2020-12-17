@@ -8,9 +8,9 @@ using System.Windows.Documents;
 namespace SPP1
 {
     [Serializable]
-    class BooksList
+    public class BooksList
     {
-        private List<Book> books;
+        public List<Book> books { get; private set; } //???
         public BooksList()
         {
             books = new List<Book>();

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SPP1
 {
     [Serializable]
-    class ISBNFormat : IComparable<ISBNFormat>, IEquatable<ISBNFormat>
+    public class ISBNFormat : IComparable<ISBNFormat>, IEquatable<ISBNFormat>
     {
         public static byte STANDART_LENGTH = 13;
 
@@ -19,7 +19,29 @@ namespace SPP1
         public int ProductCode { get; private set; }
         public int CheckDigit { get; private set; }
 
-        public string Value; //?
+        private string strValue;
+        public string Value 
+        { 
+            get
+            {
+                return strValue;
+            } 
+            set
+            {
+                if (!IsISBNValid(value))
+                {
+                    throw new ArgumentException("Invalid ISBN value!");
+                }
+                strValue = value;
+                string[] buf = value.Split(new char[] { '-', ' ' });
+                // init fields
+                GS1Prefix = int.Parse(buf[0]);
+                CountryCode = int.Parse(buf[1]);
+                ManufacterCode = int.Parse(buf[2]);
+                ProductCode = int.Parse(buf[3]);
+                CheckDigit = int.Parse(buf[4]);
+            }
+        }
         // user should enter correct full value
         public ISBNFormat()
         {
@@ -30,7 +52,7 @@ namespace SPP1
         {
             if (!IsISBNValid(_ISBN))
             {
-                throw new Exception("Invalid ISBN value");
+                throw new ArgumentException("Invalid ISBN value!");
             }
             Value = _ISBN;
             string[] buf = _ISBN.Split(new char[] { '-', ' ' });

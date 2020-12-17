@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 namespace SPP1 
 {
     [Serializable]
-    class Book : IComparable<Book>, IEquatable<Book>
+    public class Book : IComparable<Book>, IEquatable<Book>
     {
         private static string DEFAULT_AUTHOR = "WITHOUT AUTHOR";
         private static string DEFAULT_TITLE = "UNTITLED";
         private static string DEFAULT_PUBLISHER = "WITHOUT PUBLISHER";
         private static int DEFAULT_YEAR = 0;
         private static double DEFAULT_PRICE = 0.0;
-        private static string DEFAULT_ISBN = "000000000";
         private static CultureInfo DEFAULT_CULTURE = new CultureInfo("byn");
 
         private string author;
@@ -135,9 +134,9 @@ namespace SPP1
 
             set
             {
-                if ((string.IsNullOrWhiteSpace(value.Value)) || (!ISBNFormat.IsISBNValid(value.Value)))
+                if (string.IsNullOrWhiteSpace(value.Value))
                 {
-                    throw new Exception("Invalid ISBN value");
+                    throw new ArgumentException("ISBN can't be null!");
                 }
                 else
                 {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -228,14 +229,27 @@ namespace SPP1
 
         private void MenuItemSave_Click(object sender, RoutedEventArgs e)
         {
+            // is    as
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            saveFileDialog.Filter = "Binary files (*.bin)|*.bin|JSON files (*.json)|*.json";
             if ((bool)saveFileDialog.ShowDialog())
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate)) 
+                if (saveFileDialog.FileName.EndsWith(".bin"))
                 {
-                    formatter.Serialize(fileStream, booksList);
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate)) 
+                    {  
+                        formatter.Serialize(fileStream, booksList);
+                    }
+                } 
+                else
+                {
+                    string json = JsonConvert.SerializeObject(booksList);
+                    byte[] arr = Encoding.Default.GetBytes(json);
+                    using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate))
+                    {
+                        fileStream.Write(arr, 0, arr.Length);
+                    }
                 }
             }
         }
@@ -243,16 +257,32 @@ namespace SPP1
         private void MenuItemOpen_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Binary files (*.bin)|*.bin|All files (*.*)|*.*";
+            openFileDialog.Filter = "Binary files (*.bin)|*.bin|JSON files (*.json)|*.json";
             if ((bool)openFileDialog.ShowDialog())
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                booksList.Clear();
-                using (FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.OpenOrCreate))
+                if (openFileDialog.FileName.EndsWith(".bin"))
                 {
-                    booksList = (BooksList)formatter.Deserialize(fileStream);
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    booksList.Clear();
+                    using (FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.OpenOrCreate))
+                    {
+                        booksList = (BooksList)formatter.Deserialize(fileStream);
+                    }
+                    RedrawGridBooks();
                 }
-                RedrawGridBooks();
+                else
+                {
+                    booksList.Clear();
+                    using (FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.OpenOrCreate))
+                    {
+                        byte[] arr = new byte[fileStream.Length];
+                        fileStream.Read(arr, 0, (int)fileStream.Length);
+                        string json = Encoding.Default.GetString(arr);
+                        booksList = JsonConvert.DeserializeObject<BooksList>(json);
+                    }
+                    RedrawGridBooks();
+                }
+             
             }
         }
     }
