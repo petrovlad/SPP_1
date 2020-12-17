@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using NLog;
 
 namespace SPP1
 {
     [Serializable]
     public class ISBNFormat : IComparable<ISBNFormat>, IEquatable<ISBNFormat>
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public static byte STANDART_LENGTH = 13;
 
         public int GS1Prefix { get; private set; }
@@ -30,6 +27,8 @@ namespace SPP1
             {
                 if (!IsISBNValid(value))
                 {
+                    logger.Error($"ISBN value=`{value}` is invalid.");
+
                     throw new ArgumentException("Invalid ISBN value!");
                 }
                 strValue = value;
@@ -45,13 +44,15 @@ namespace SPP1
         // user should enter correct full value
         public ISBNFormat()
         {
-
+            logger.Debug($"Created new ISBN: {this}.");
         }
         
         public ISBNFormat(string _ISBN)
         {
             if (!IsISBNValid(_ISBN))
             {
+                logger.Error($"ISBN value=`{_ISBN}` is invalid.");
+
                 throw new ArgumentException("Invalid ISBN value!");
             }
             Value = _ISBN;
@@ -62,6 +63,8 @@ namespace SPP1
             ManufacterCode = int.Parse(buf[2]);
             ProductCode = int.Parse(buf[3]);
             CheckDigit = int.Parse(buf[4]);
+
+            logger.Debug($"Created new ISBN: {this}.");
         }
         public ISBNFormat(int _GS1Prefix, int _countryCode, int _manufacterCode, int _productCode, byte _checkDigit)
         {

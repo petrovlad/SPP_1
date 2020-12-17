@@ -1,79 +1,102 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
+using NLog;
 
 namespace SPP1
 {
     [Serializable]
     public class BooksList
     {
-        public List<Book> books { get; private set; } //???
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
+        public List<Book> Books { get; private set; }
         public BooksList()
         {
-            books = new List<Book>();
+            Books = new List<Book>();
+
+            logger.Debug("Created new BooksList.");
         }
 
         public void Add(Book book)
         {
-            books.Add(book);
+            Books.Add(book);
+
+            logger.Debug($"Added book `{book}` to list.");
         }
 
         public void RemoveAt(int index)
         {
-            books.RemoveAt(index);
+            Book book = Books.ElementAt(index);
+            Books.RemoveAt(index);
+
+            logger.Debug($"Removed book `{book}` from list.");
         }
         public Book ElementAt(int index)
         {
-            return books.ElementAt(index);
+            return Books.ElementAt(index);
         }
         // -1 if not found
         public int IndexOf(Book book)
         {
-            return books.IndexOf(book);
+            return Books.IndexOf(book);
         }
         public void Clear()
         {
-            books.Clear();
+            Books.Clear();
+
+            logger.Debug("BooksList was cleared.");
         }
 
         public void Sort()
         {
-            books.Sort();
+            Books.Sort();
+
+            logger.Debug("BooksList was sorted.");
         }
 
         public void SortByAuthor()
         {
-            books.Sort(Book.CompareByAuthor);
+            Books.Sort(Book.CompareByAuthor);
+            
+            logger.Debug("BooksList was by author.");
         }
 
         public void SortByTitle()
         {
-            books.Sort(Book.CompareByTitle);
+            Books.Sort(Book.CompareByTitle);
+
+            logger.Debug("BooksList was by title.");
         }
         public void SortByPublisher()
         {
-            books.Sort(Book.CompareByPublisher);
+            Books.Sort(Book.CompareByPublisher);
+
+            logger.Debug("BooksList was by publisher.");
         }
         public void SortByYear()
         {
-            books.Sort(Book.CompareByYear);
+            Books.Sort(Book.CompareByYear);
+
+            logger.Debug("BooksList was by year.");
         }
         public void SortByPrice()
         {
-            books.Sort(Book.CompareByPrice);
+            Books.Sort(Book.CompareByPrice);
+
+            logger.Debug("BooksList was by price.");
         }
         public void SortByISBN()
         {
-            books.Sort(Book.CompareByISBN);
+            Books.Sort(Book.CompareByISBN);
+
+            logger.Debug("BooksList was by ISBN.");
         }
         public int Count
         {
             get
             {
-                return books.Count;
+                return Books.Count;
             }
         }
     }

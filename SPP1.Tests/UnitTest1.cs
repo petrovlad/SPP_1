@@ -2,6 +2,8 @@ using NUnit.Framework;
 using NLog;
 using SPP1;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SPP1.Tests
 {
@@ -66,50 +68,36 @@ namespace SPP1.Tests
 	[TestFixture]
 	public class BooksListTests
 	{
-		BooksList books;
+		BooksList booksList;
 
 		[SetUp]
 		public void SetUp() 
 		{
-			books = new BooksList();
+			booksList = new BooksList();
 
-			books.Add(new Book("Author3", "Title1", "Publisher2", 2001, 99.99, "byn", "978-3-16-148410-0"));
-			books.Add(new Book("Author2", "Title2", "Publisher3", 2002, 199.99, "byn", "978-1-56619-909-4"));
-			books.Add(new Book("Author1", "Title3", "Publisher1", 2000, 9.99, "byn", "978-1-4028-9462-6"));
+			booksList.Add(new Book("Author3", "Title1", "Publisher2", 2001, 99.99, "byn", "978-3-16-148410-0"));
+			booksList.Add(new Book("Author2", "Title2", "Publisher3", 2002, 199.99, "byn", "978-1-56619-909-4"));
+			booksList.Add(new Book("Author1", "Title3", "Publisher1", 2000, 9.99, "byn", "978-1-4028-9462-6"));
 		}
 
 		[Test]
 		public void SortByAuthorTest()
 		{
-			books.SortByAuthor();
+			List<Book> expectedResult = new List<Book>(booksList.Books.OrderBy(x => x.Author));
 
-			bool isSorted = true;
-			for (int i = 1; i < books.Count; i++) 
-			{
-				if (books.ElementAt(i).Author.CompareTo(books.ElementAt(i - 1).Author) == -1)
-				{
-					isSorted = false;
-					break;
-				}
-			}
-			Assert.IsTrue(isSorted);
+			booksList.SortByAuthor();
+
+			CollectionAssert.AreEqual(expectedResult, booksList.Books);
 		}
 
 		[Test]
 		public void SortByTitleTest()
 		{
-			books.SortByTitle();
+			List<Book> expectedResult = new List<Book>(booksList.Books.OrderBy(x => x.Title));
 
-			bool isSorted = true;
-			for (int i = 1; i < books.Count; i++)
-			{
-				if (books.ElementAt(i).Title.CompareTo(books.ElementAt(i - 1).Title) == -1)
-				{
-					isSorted = false;
-					break;
-				}
-			}
-			Assert.IsTrue(isSorted);
+			booksList.SortByTitle();
+
+			CollectionAssert.AreEqual(expectedResult, booksList.Books);
 		}
 	}
 

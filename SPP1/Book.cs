@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using NLog;
 
 namespace SPP1 
 {
     [Serializable]
     public class Book : IComparable<Book>, IEquatable<Book>
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private static string DEFAULT_AUTHOR = "WITHOUT AUTHOR";
         private static string DEFAULT_TITLE = "UNTITLED";
         private static string DEFAULT_PUBLISHER = "WITHOUT PUBLISHER";
@@ -36,6 +34,8 @@ namespace SPP1
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
+                    logger.Info("Author parameter was null, so set default Author.");
+
                     author = value;
                 } 
                 else
@@ -56,6 +56,8 @@ namespace SPP1
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
+                    logger.Info("Title parameter was null, so set default Title.");
+
                     title = value;
                 }
                 else
@@ -76,6 +78,8 @@ namespace SPP1
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
+                    logger.Info("Publisher parameter was null, so set default Publisher.");
+
                     publisher = value;
                 }
                 else
@@ -96,6 +100,8 @@ namespace SPP1
             {
                 if (value == null)
                 {
+                    logger.Info("Year parameter was null, so created default YearFormat.");
+
                     year = new YearFormat(DEFAULT_YEAR);
                 }
                 else
@@ -116,6 +122,8 @@ namespace SPP1
             {
                 if (value == null)
                 {
+                    logger.Info("Price parameter was null, so created default PriceFormat.");
+
                     price = new PriceFormat(DEFAULT_PRICE, DEFAULT_CULTURE);
                 }
                 else
@@ -136,6 +144,8 @@ namespace SPP1
             {
                 if (string.IsNullOrWhiteSpace(value.Value))
                 {
+                    logger.Error("ISBN parameter was null.");
+
                     throw new ArgumentException("ISBN can't be null!");
                 }
                 else
@@ -147,7 +157,7 @@ namespace SPP1
 
         public Book()
         {
-
+            logger.Debug($"Created new book: {this}.");
         }
 
         public Book(string _author, string _title, string _publisher, YearFormat _year, PriceFormat _price, ISBNFormat _ISBN)
@@ -157,7 +167,9 @@ namespace SPP1
             Publisher = _publisher;
             Year = _year;
             Price = _price;
-            ISBN = _ISBN;  
+            ISBN = _ISBN;
+
+            logger.Debug($"Created new book: {this}.");
         }
 
         public Book(string _author, string _title, string _publisher, int _year, double _price, string _cultureName, string _ISBN)
@@ -168,6 +180,8 @@ namespace SPP1
             Year = new YearFormat(_year);
             Price = new PriceFormat(_price, new CultureInfo(_cultureName));
             ISBN = new ISBNFormat(_ISBN);
+
+            logger.Debug($"Created new book: {this}.");
         }
 
         public override string ToString()
